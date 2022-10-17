@@ -6,7 +6,7 @@ Build an API to access the included pokedex dataset, and practise writing schema
 
 For this assignment you will have to;
 
-1. Upload the `pokedex` dataset to your MongoDB database
+1. Import the `pokedex.json` dataset to your MongoDB Atlas database using MongoDB Compass
 2. Create a mongoose schema for the `pokedex` database
 3. Add validation to the schema
 4. Create an API for accessing the `pokedex` database
@@ -19,29 +19,26 @@ Before starting these tasks install the included npm packages, by running the co
 
 ### Task 1 - Importing the pokedex data
 
-1. In your MongoDB server, create a new database `db-validation`
+1. Create a new database `db-validation` using your CONNECTION_URL.
 
-2. Inside this database, create a new collection called `pokedex`
+2. Inside this database, create a new collection called `pokedex`. You can create a collection using MongoDB Compass.
 
-3. Upload the `pokedex.json` dataset into your `pokedex` collection
+3. Import the `pokedex.json` dataset into your `pokedex` collection using MongoDB Compass
 
 ### Task 2 - Setting up the .env file
 
 1. Using the `.env.example` file as a template, create a `.env` file
 
-2. Add your database connection details to your `.env` file, filling in the details as provided to you by MongoDB
-   > Hint: The key `DB_NAME` points to the name of the database you want to connect to. Use the name `db-validation`. This will ensure that Mongoose will try and use the existing sample dataset you previously set up.
-
-   > Hint: The key `DB_HOST` is the **domain** of your MongoDB connection string
+2. Add your database connection details to your `.env` file.
 
 ### Task 3 - Connecting your server to your database
 
 Inside `server.js`;
 
-1. Using the `mongoose.connect()` method, use the variable `dbConnectionString` to connect to your database
+1. Using the `mongoose.connect()` method, use the variable `CONNECTION_URL` to connect to your database
 
 2. `mongoose.connect()` returns a promise
-   - use the `then()` method to display a message saying the connection was successful
+   - use the `then()` method to display a message saying the connection was successful and listen the port
    - use the `catch()` method to display a message saying the connection failed
 
 3. Check that your database can connect
@@ -122,7 +119,7 @@ We will create an endpoint to load all pokemon
 
 We will create an endpoint to load all pokemons of a specific type
 
-1. Create an endpoint with the path `/type`. This will be a `GET` endpoint. The endpoint should expect a request parameter from the client, the pokemon `type`.
+1. Create an endpoint with the path `/type/:type`. This will be a `GET` endpoint. The endpoint should expect a request parameter from the client, the pokemon `type`.
 
 2. Use the endpoint to interact with the **Pokedex** model
 
@@ -138,7 +135,7 @@ We will create an endpoint to load all pokemons of a specific type
 
 We will create an endpoint to load a specific pokemon, based on the `name`
 
-1. Create an endpoint with the path `/name`. This will be a `GET` endpoint. The endpoint should expect a request parameter from the client, the pokemon `name`.
+1. Create an endpoint with the path `/name/:name`. This will be a `GET` endpoint. The endpoint should expect a request parameter from the client, the pokemon `name`.
 
 2. Use the endpoint to interact with the **Pokedex** model to find the pokemon by `name`. For now, default to the **english** version of the name, then:
    - If found, return a status of `200` and the result
@@ -150,14 +147,4 @@ We will create an endpoint to load a specific pokemon, based on the `name`
 > Pokedex.find({ "name.english": "Wartortle" })
 > ```
 
-## Bonus tasks
 
-### Modifying an endpoint - search for pokemon by name AND language
-
-1. Modify the endpoint you created in Task 9
-
-2. Using a `query` parameter, allow the user to change the language of the search
-
-> Example: If the user attaches the query `?language=japanese` then search for the japanese version of the name
-
-> Hint: You can access query parameters from the **request** object with the `query` property
